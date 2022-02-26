@@ -1,0 +1,6 @@
+<div *ngIf="showinput" #upload class="flex justify-end">
+
+    <div (click)="inputing()"  class=" bg-orange-200 cursor-pointer rounded-md w-1/3 text-center ">Add new sheet</div>
+    <input #input type="file" id="input" class="hidden" >
+    <input type="text" [(ngModel)]="sheetname" placeholder="Sheetname">
+</div>
