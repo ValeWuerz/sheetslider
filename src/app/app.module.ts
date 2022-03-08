@@ -27,7 +27,10 @@ const dbConfig: DBConfig  = {
     AppComponent,
     AddSheetComponent,
     SidemenuComponent,
+<<<<<<< HEAD
     DecibelComponent,
+=======
+>>>>>>> 8ef50f03464d707f66533f55e5ae0e1a85cb15d3
     
   ],
   imports: [
