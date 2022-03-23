@@ -17,7 +17,7 @@ export class AppComponent implements AfterViewInit {
   title = 'sheetslider';
   showing(){
     if (this.sidemenu.show_menu==false) {
-      this.sidemenu.render_sidemenu()
+      this.sidemenu.render_sidemenu(this.sidemenu.sheets)
     }
     this.sidemenu.show_menu=!this.sidemenu.show_menu
       

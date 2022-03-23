@@ -7,6 +7,8 @@ import { AddSheetComponent } from './add-sheet/add-sheet.component';
 import { DBConfig, NgxIndexedDBModule } from 'ngx-indexed-db';
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 import { DecibelComponent } from './decibel/decibel.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 const dbConfig: DBConfig  = {
   name: 'sheets',
   version: 3,
@@ -27,10 +29,7 @@ const dbConfig: DBConfig  = {
     AppComponent,
     AddSheetComponent,
     SidemenuComponent,
-<<<<<<< HEAD
     DecibelComponent,
-=======
->>>>>>> 8ef50f03464d707f66533f55e5ae0e1a85cb15d3
     
   ],
   imports: [
@@ -38,6 +37,12 @@ const dbConfig: DBConfig  = {
     BrowserModule,
     AppRoutingModule,
     NgxIndexedDBModule.forRoot(dbConfig),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:5000'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

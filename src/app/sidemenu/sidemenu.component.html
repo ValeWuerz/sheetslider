@@ -1,9 +1,10 @@
 <div id="page" #page class=" relative  ">
     <div id="playground" #playground></div>
     <!-- pa -->
+    <input type="text" #filter class="z-50 fixed h-7 top-7"[(ngModel)]="filter_exp" (ngModelChange)="filter_sheets()"  placeholder="search">
     <div  #menu *ngIf="show_menu" class=" w-1/3  flex-col flex justify-center items-center z-20 h-full  ">
         <div #container class="overflow-auto  hover:overflow-y  hide_scroll h-screen fixed top-6 ">
-           <div #list >
+           <div #list class="mt-9" >
 
            </div>
         </div>

@@ -18,6 +18,7 @@ export class SidemenuComponent implements OnInit {
 sheets: Array<Sheets>=[]
 active_sheet: Sheets | undefined
 show_menu: boolean = true
+filter_exp:string =""
 constructor(private dbService: NgxIndexedDBService, private rendering: RenderSheetService){}
 ngOnInit(): void {
   
@@ -39,16 +40,26 @@ get_database_sheets(){
    this.sheets.push(note)
    
    }
-     this.render_sidemenu()
+     this.render_sidemenu(this.sheets)
  });
 
  
 }
-render_sidemenu(){
- for (let index = 0; index < this.sheets.length; index++) {
+filter_sheets(){
+    
+  let filtered= this.sheets.filter(item=>item["name"].startsWith(this.filter_exp));
+  console.log(filtered);
+  
+  this.rendering.remove_childs(this.sheet_list.nativeElement)
+  this.render_sidemenu(filtered)
+}
+
+render_sidemenu(target:any){
+
+ for (let index = 0; index < target.length; index++) {
    let reader = new FileReader();
 
-   reader.readAsArrayBuffer(this.sheets[index]["imageUrl"])
+   reader.readAsArrayBuffer(target[index]["imageUrl"])
     reader.onload = () =>{
  var typedarray = new Uint8Array(<ArrayBuffer>reader.result);
 
@@ -57,19 +68,19 @@ render_sidemenu(){
      var viewport = page.getViewport({scale:1});
      let can= document.createElement('canvas')
      let label= document.createElement('div')
-     label.innerText=this.sheets[index]["name"]
+     label.innerText=target[index]["name"]
      label.setAttribute("class", "bg-slate-500 ")
-     can.setAttribute("id", this.sheets[index]["name"].toString());
+     can.setAttribute("id", target[index]["name"].toString());
      can.setAttribute("class", "hover:border-yellow-50 hover:border-4" );
      can.addEventListener('click',  (event:any) => {
        
        let sheet_index = event.target['id']   //name
-       let searched_sheet = this.sheets.findIndex((sheet)=>{
+       let searched_sheet = target.findIndex((sheet:any)=>{
          return sheet["name"]==sheet_index
        })
-       console.log(this.sheets[searched_sheet])
+       console.log(target[searched_sheet])
        console.log(sheet_index)
-       this.active_sheet=this.sheets[searched_sheet]
+       this.active_sheet=target[searched_sheet]
        let active_url= this.active_sheet["imageUrl"]
        let playground= this.playground.nativeElement
        this.rendering.remove_childs(playground)
@@ -103,7 +114,7 @@ render_sidemenu(){
 
 open_menu(){
  if (!this.show_menu) {
- this.render_sidemenu()
+ this.render_sidemenu(this.sheets)
    
  }
    this.show_menu=!this.show_menu
