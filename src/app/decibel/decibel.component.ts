@@ -91,7 +91,14 @@ let db_num = this.decibel_num.nativeElement
         
       }
       scrollToBottom()  {
-        this.scrollinterval= window.setInterval(() => { window.scrollBy(0,2); }, this.speed);
+        console.log("Speed: "+(100-this.speed));
+        
+        this.scrollinterval= window.setInterval(() => { 
+          window.scrollBy({
+            top:2,
+            left:0,
+            behavior: 'smooth'
+          }); }, 100-this.speed);
         
       }
       clearintervals(){
