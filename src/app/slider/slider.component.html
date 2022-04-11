@@ -1,0 +1,15 @@
+<pdf-viewer (click)="getclass()" 
+[src]="pdfSrc"
+[render-text]="true"
+[original-size]="false"
+class="h-screen w-full " id="hide-scroll"></pdf-viewer>
+<div #decibel  class="fixed z-10 select-none right-1 top-0 bg-gray-600 w-12 text-white text-center
+rounded-md cursor-pointer"  >{{decibel_nr}}</div>
+<div id="speed" class="fixed right-3 z-40 top-10 ">
+
+    <input    type="range" min="0" max="200" value="25" step="1" [(ngModel)]="speed" >
+    {{speed}}
+   <!-- [(ngModel)]="speed" -->
+  </div>
+
+
