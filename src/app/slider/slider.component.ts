@@ -6,11 +6,12 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
   styleUrls: ['./slider.component.scss']
 })
 export class SliderComponent implements OnInit,AfterViewInit {
-  decibel_nr="mic"
+  decibel_nr="Mic"
 
   check: boolean =false
   scrollcause: number | undefined;
   decibel: number | undefined
+  editor_opened: boolean=false
   @ViewChild('decibel', { static: false }) decibel_num!: ElementRef;
     check1: boolean = true;
     scrollinterval: number | undefined;
@@ -44,6 +45,9 @@ getclass(){
 
   }
  
+}
+open_editor(){
+this.editor_opened=!this.editor_opened
 }
 scroll(){
   let element= document.getElementsByClassName("ng2-pdf-viewer-container")[0]
@@ -120,14 +124,14 @@ else{
 scrollToBottom()  {
   let element= document.getElementsByClassName("ng2-pdf-viewer-container")[0]
 
-  console.log("Speed: "+(200-this.speed));
+  console.log("Speed: "+(100-this.speed));
   
   this.scrollinterval= window.setInterval(() => { 
     element.scrollBy({
       top: 1,
       left:0,
       behavior: 'smooth'
-    }); }, 200-this.speed);
+    }); }, 100-this.speed);
   
 }
 clearintervals(){
