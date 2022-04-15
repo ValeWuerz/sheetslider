@@ -1,11 +1,13 @@
-<pdf-viewer (click)="getclass()" 
+<pdf-viewer  (click)="getclass()" 
 [src]="pdfSrc"
-[render-text]="true"
+[render-text]="false"
 [original-size]="false"
-class="h-screen w-full cursor-crosshair " id="hide-scroll"></pdf-viewer>
+class="h-screen w-full cursor-crosshair z-9 " id="whole-pdf" >
+</pdf-viewer>
+<div class="bg-red-700 absolute top-11 h-tiny w-3/4 " id="line" ></div>
 <div #decibel  class="fixed z-10 select-none right-1 top-0 bg-gray-600 w-12 text-white text-center
 rounded-md cursor-pointer"  >{{decibel_nr}}</div>
-<div class="fixed z-10 select-none right-14 w-12 bg-blue-400 top-0 text-center rounded-md cursor-pointer" 
+<div #sheet class="fixed z-10 select-none right-14 w-12 bg-blue-400 top-0 text-center rounded-md cursor-pointer" 
 (click)="open_editor()">Editor</div>
 <div id="speed" class="fixed right-3 z-40 top-10 select-none ">
 
@@ -13,6 +15,5 @@ rounded-md cursor-pointer"  >{{decibel_nr}}</div>
     {{speed}}
    <!-- [(ngModel)]="speed" -->
   </div>
-<div class="bg-red-500 fixed top-11" ></div>
 
 

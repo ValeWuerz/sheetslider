@@ -13,6 +13,7 @@ export class SliderComponent implements OnInit,AfterViewInit {
   decibel: number | undefined
   editor_opened: boolean=false
   @ViewChild('decibel', { static: false }) decibel_num!: ElementRef;
+  @ViewChild('sheet', { static: false }) sheet!: ElementRef;
     check1: boolean = true;
     scrollinterval: number | undefined;
     speed: number =20;
@@ -23,6 +24,7 @@ display_scroll=true
   ngOnInit(): void {
   }
   ngAfterViewInit(): void {
+   
     document.addEventListener("deviceready", this.onDeviceReady, false);
       this.initialisieren()
 let ngcontainer=<HTMLElement>document.getElementsByClassName("ng2-pdf-viewer-container")[0]
@@ -30,6 +32,10 @@ ngcontainer.style.overflowX="hidden"
 }
   onDeviceReady(even:any) {
 console.log("ready");
+
+  }
+  getCursorPos(a:any){
+console.log(a.pageY);
 
   }
 getclass(){
@@ -44,10 +50,58 @@ getclass(){
     this.display_scroll=!this.display_scroll
 
   }
+  
  
 }
 open_editor(){
+  
 this.editor_opened=!this.editor_opened
+let pageNumber=1
+let element= document.getElementsByClassName("ng2-pdf-viewer-container")[0]
+
+let canvas = document.getElementsByTagName("canvas")[1] as HTMLElement
+canvas.style.cursor="crosshair"
+canvas.style.pointerEvents="none"
+
+let specific_page=document.getElementById('whole-pdf')! as HTMLElement
+specific_page.addEventListener('mousemove', function logging(ev) {
+  let event:any = ev
+  let target=event.target
+  console.log(target);
+  
+  let rect=specific_page.getBoundingClientRect();
+  let y= ev.clientY + specific_page.scrollTop - rect.top
+  console.log("Y :"+y);
+  console.log("clienY :"+ev.clientY);
+  console.log("Scroll :"+element.scrollTop);
+  console.log("top :"+rect.top);
+  
+  
+let layer=event['offsetY']
+  document.getElementById("line")!.style.top=y.toString() + "px"
+  
+})
+/* specific_page.addEventListener('click', function logging(ev) {
+  let event:any = ev
+let layer=event['offsetY']
+  console.log(layer);
+  document.getElementById("line")!.style.top=layer.toString() + "px"
+  
+}) */
+
+//let page=document.getElementsByClassName('page')!
+/* pages.forEach(page => {
+  page.addEventListener('click', function position(ev) {
+    console.log(ev.target);
+    console.log("test");
+    
+  })
+  
+}); */
+
+
+
+
 }
 scroll(){
   let element= document.getElementsByClassName("ng2-pdf-viewer-container")[0]
