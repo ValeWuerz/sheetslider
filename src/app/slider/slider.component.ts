@@ -13,19 +13,20 @@ export class SliderComponent implements OnInit,AfterViewInit {
   scrollcause: number | undefined;
   decibel: number | undefined
   editor_opened: boolean=false
-  cut_box: Array<string>=["",""]
+  cut_box: Array<string>=["0","0"]
   chosen_layer:string=""
   targetted_sheet={
     page:"",
     height:"",
   }
+  dialog_var:string="Start Cutting"
   target_reference:any
   @ViewChild('decibel', { static: false }) decibel_num!: ElementRef;
   @ViewChild('sheet', { static: false }) sheet!: ElementRef;
     check1: boolean = true;
     scrollinterval: number | undefined;
     speed: number =20;
-    cut_range_top: number=0
+    cut_range: number=0
     cut_range_bottom: number=0
 pdfSrc!:Uint8Array;
 display_scroll=true
@@ -71,46 +72,71 @@ this.editor_opened=!this.editor_opened
 this.show_decibel=!this.show_decibel
 if (this.editor_opened) {
 
-let canvas = document.getElementsByTagName("canvas")[1] as HTMLElement
-canvas.style.cursor="crosshair"
-canvas.style.pointerEvents="none"
-let pageNumber=1
-let page=document.querySelector(`[data-page-number=\"${pageNumber}\"`)! as HTMLElement
+}
+}
+dialog(){
+  let cut_range= document.getElementById("cut_range")
+let cut_range_bottom= document.getElementById("cut_range_bottom")
+  let controller = new AbortController
+  let element= document.getElementsByClassName("ng2-pdf-viewer-container")[0]
+  let pageNumber=1
+  let page=document.querySelector(`[data-page-number=\"${pageNumber}\"`)! as HTMLElement
+  let height=parseInt(page.style.height)
+if (this.dialog_var=="Start Cutting") {
+this.dialog_var="Top"
+}
+else if(this.dialog_var=="Top"){
+cut_range.style.display="block"
+cut_range_bottom.style.display="none"
+   element.scrollTo({
+    top: height*pageNumber -height,
+    left:0,
+    behavior: 'smooth'
+  })
+this.dialog_var="Proceed Cut"
 
-let whole_pdf=document.getElementById('whole-pdf')! as HTMLElement
-let cut_range_top = document.getElementById('cut_range_top')
-let cut_range_bottom = document.getElementById('cut_range_bottom')
-page.appendChild(cut_range_top)
-page.appendChild(cut_range_bottom)
-whole_pdf.addEventListener('mousemove', (ev:MouseEvent)=> {  
 
-  let y= ev.clientY + whole_pdf.scrollTop
-  document.getElementById("line")!.style.top=y.toString() + "px"
-  let event:any = ev 
-  let element = event.target
-  this.chosen_layer=event["layerY"]
+cut_range.addEventListener("mousemove", (ev)=>{
   
-  let reference=element.parentElement.parentElement
-  this.targetted_sheet.page=element.parentElement.parentElement.getAttribute("data-page-number")
-  if (element.parentElement.parentElement.getAttribute("data-page-number")==null) {
-    this.targetted_sheet.page=element.parentElement.getAttribute("data-page-number")
-    reference=element.parentElement
-  }
-  this.target_reference=reference
-  this.targetted_sheet.height=element.style.height
-  reference!.style.marginBottom="0px"
-  reference.style.clipPath=`inset(${this.cut_range_top}px 0px 0px 0px)`  
-  reference.style.clipPath=`inset(0px 0px ${this.cut_range_bottom}px 0px)`  
-})
-cut_range_top.addEventListener('touchmove', (ev:TouchEvent)=>{
-  this.target_reference.style.clipPath=`inset(${this.cut_range_top}px 0px 0px 0px)`  
-})
-cut_range_bottom.addEventListener('touchmove', (ev:TouchEvent)=>{
-  this.target_reference.style.clipPath=`inset(${this.cut_range_bottom}px 0px 0px 0px)`  
-})
+  let range_input=this.cut_range.toString().slice()
+  this.cut_box[0]=range_input.slice()
+  page.style.clipPath=`inset(${this.cut_box[0]}px 0px 0px 0px)`
+  console.log(this.cut_box);
+
+    })
+  
+}
+else if(this.dialog_var=="Proceed Cut"){
+  cut_range.style.display="none"
+cut_range_bottom.style.display="block"
+ alert("cutted")
+  this.dialog_var="Bottom"
 
 }
+ 
+else if(this.dialog_var=="Bottom"){
+  element.scrollTo({
+    top: (height*pageNumber)/2,
+    left:0,
+    behavior: 'smooth'
+  })
+  document.getElementById("cut_range_bottom").addEventListener("mousemove", (ev)=>{
+    let range_input=this.cut_range_bottom.toString().slice()
+    this.cut_box[1]=range_input.slice()
+    page.style.clipPath=`inset(${this.cut_box[0]}px 0px ${this.cut_box[1]}px 0px)`
+  console.log(this.cut_box);
+
+      })
+this.dialog_var="Proceed Cut"
+
 }
+else if(this.dialog_var=="Proceed Cut"){
+  alert("cutted")
+   this.dialog_var="Bottom"
+ 
+ }
+}
+
 set_cut(){ 
   if (this.cut_box[0]=="") {
     this.cut_box[0]=this.chosen_layer

@@ -7,8 +7,8 @@
     class="h-screen w-full cursor-crosshair z-9 " id="whole-pdf" >
 </pdf-viewer>
     
-    <div class="bg-red-700 absolute top-11 h-tiny w-4/5 select-none z-10 " *ngIf="editor_opened" id="line" ><button (click)="set_cut()">setprop</button></div>
-<div #decibel *ngIf="show_decibel"  class="fixed z-10 select-none right-1 top-0 bg-gray-600 w-12 text-white text-center
+<!--     <div class="bg-red-700 absolute top-11 h-tiny w-4/5 select-none z-10 " *ngIf="editor_opened" id="line" ><button (click)="set_cut()">setprop</button></div>
+ --><div #decibel *ngIf="show_decibel"  class="fixed z-10 select-none right-1 top-0 bg-gray-600 w-12 text-white text-center
 rounded-md cursor-pointer"  >{{decibel_nr}}</div>
 <div #sheet class="fixed z-10 select-none right-14 w-12 bg-blue-400 top-0 text-center rounded-md cursor-pointer" 
 (click)="open_editor()">Editor</div>
@@ -18,11 +18,18 @@ rounded-md cursor-pointer"  >{{decibel_nr}}</div>
     {{speed}}
     <!-- [(ngModel)]="speed" -->
 </div>
-<div id="cut_range_top" class="absolute top-1/4 right-2 -rotate-90" >    
-    <input type="range" min="0" max="500" value="25" step="1" [(ngModel)]="cut_range_top" *ngIf="editor_opened" class="h-6">
-</div>
-<div id="cut_range_bottom" class="absolute bottom-1/4 right-2 -rotate-90" >    
+
+<!-- <div id="cut_range_bottom" class="absolute bottom-1/4 right-2 -rotate-90" >    
     <input type="range" min="0" max="500" value="25" step="1" [(ngModel)]="cut_range_bottom" *ngIf="editor_opened" class="h-6">
+</div> -->
+<div id="dialogbox" class="fixed text-center top-1/2 select-none" *ngIf="editor_opened">
+    <button (click)="dialog()" class="bg-blue-600 rounded-md select-none" [(ngModel)]="dialog_var">{{dialog_var}}</button>
+</div>
+<div id="cut_range" class="fixed top-1/2 right-2 -rotate-90 select-none" >    
+    <input type="range" min="0" max="500" value="25" step="1" [(ngModel)]="cut_range"  *ngIf="editor_opened" class="h-6 select-none">
+</div>
+<div id="cut_range_bottom" class="fixed top-1/2 right-2 -rotate-90 select-none" >    
+    <input type="range" min="0" max="500" value="25" step="1" [(ngModel)]="cut_range_bottom"  *ngIf="editor_opened" class="h-6 select-none">
 </div>
 </div>
 
