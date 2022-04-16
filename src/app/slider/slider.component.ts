@@ -9,18 +9,30 @@ export class SliderComponent implements OnInit,AfterViewInit {
   decibel_nr="Mic"
 
   check: boolean =false
+  show_decibel:boolean=true
   scrollcause: number | undefined;
   decibel: number | undefined
   editor_opened: boolean=false
+  cut_box: Array<string>=["",""]
+  chosen_layer:string=""
+  targetted_sheet={
+    page:"",
+    height:"",
+  }
+  target_reference:any
   @ViewChild('decibel', { static: false }) decibel_num!: ElementRef;
   @ViewChild('sheet', { static: false }) sheet!: ElementRef;
     check1: boolean = true;
     scrollinterval: number | undefined;
     speed: number =20;
+    cut_range_top: number=0
+    cut_range_bottom: number=0
 pdfSrc!:Uint8Array;
 display_scroll=true
 
-  constructor() { }
+  constructor() {
+   
+   }
   ngOnInit(): void {
   }
   ngAfterViewInit(): void {
@@ -56,50 +68,109 @@ getclass(){
 open_editor(){
   
 this.editor_opened=!this.editor_opened
-let pageNumber=1
-let element= document.getElementsByClassName("ng2-pdf-viewer-container")[0]
+this.show_decibel=!this.show_decibel
+if (this.editor_opened) {
 
 let canvas = document.getElementsByTagName("canvas")[1] as HTMLElement
 canvas.style.cursor="crosshair"
 canvas.style.pointerEvents="none"
+let pageNumber=1
+let page=document.querySelector(`[data-page-number=\"${pageNumber}\"`)! as HTMLElement
 
-let specific_page=document.getElementById('whole-pdf')! as HTMLElement
-specific_page.addEventListener('mousemove', function logging(ev) {
-  let event:any = ev
-  let target=event.target
-  console.log(target);
-  
-  let rect=specific_page.getBoundingClientRect();
-  let y= ev.clientY + specific_page.scrollTop - rect.top
-  console.log("Y :"+y);
-  console.log("clienY :"+ev.clientY);
-  console.log("Scroll :"+element.scrollTop);
-  console.log("top :"+rect.top);
-  
-  
-let layer=event['offsetY']
+let whole_pdf=document.getElementById('whole-pdf')! as HTMLElement
+let cut_range_top = document.getElementById('cut_range_top')
+let cut_range_bottom = document.getElementById('cut_range_bottom')
+page.appendChild(cut_range_top)
+page.appendChild(cut_range_bottom)
+whole_pdf.addEventListener('mousemove', (ev:MouseEvent)=> {  
+
+  let y= ev.clientY + whole_pdf.scrollTop
   document.getElementById("line")!.style.top=y.toString() + "px"
+  let event:any = ev 
+  let element = event.target
+  this.chosen_layer=event["layerY"]
   
+  let reference=element.parentElement.parentElement
+  this.targetted_sheet.page=element.parentElement.parentElement.getAttribute("data-page-number")
+  if (element.parentElement.parentElement.getAttribute("data-page-number")==null) {
+    this.targetted_sheet.page=element.parentElement.getAttribute("data-page-number")
+    reference=element.parentElement
+  }
+  this.target_reference=reference
+  this.targetted_sheet.height=element.style.height
+  reference!.style.marginBottom="0px"
+  reference.style.clipPath=`inset(${this.cut_range_top}px 0px 0px 0px)`  
+  reference.style.clipPath=`inset(0px 0px ${this.cut_range_bottom}px 0px)`  
 })
-/* specific_page.addEventListener('click', function logging(ev) {
-  let event:any = ev
-let layer=event['offsetY']
-  console.log(layer);
-  document.getElementById("line")!.style.top=layer.toString() + "px"
-  
-}) */
+cut_range_top.addEventListener('touchmove', (ev:TouchEvent)=>{
+  this.target_reference.style.clipPath=`inset(${this.cut_range_top}px 0px 0px 0px)`  
+})
+cut_range_bottom.addEventListener('touchmove', (ev:TouchEvent)=>{
+  this.target_reference.style.clipPath=`inset(${this.cut_range_bottom}px 0px 0px 0px)`  
+})
 
-//let page=document.getElementsByClassName('page')!
-/* pages.forEach(page => {
-  page.addEventListener('click', function position(ev) {
-    console.log(ev.target);
-    console.log("test");
+}
+}
+set_cut(){ 
+  if (this.cut_box[0]=="") {
+    this.cut_box[0]=this.chosen_layer
+    this.create_line()
+
+    alert("Startcut set")
+  }
+  else{
+    this.cut_box[1]=this.chosen_layer
+    let pageNumber= this.targetted_sheet.page
+    let topcut= (this.cut_box[0]).toString() + "px"
+    let bottomcut=(parseInt(this.targetted_sheet.height) -parseInt(this.cut_box[1])).toString() +"px"
+    let page=document.querySelector(`[data-page-number=\"${pageNumber}\"`)! as HTMLElement
+    let page_following=(parseInt(pageNumber)+1).toString()
+    let following_page=document.querySelector(`[data-page-number=\"${page_following}\"`)! as HTMLElement
+    let marginTop=`-${bottomcut}`
+    this.create_line()
+    //page.style.clipPath=`inset(${topcut} 0px ${bottomcut} 0px)`
+  /*   alert("cut finished")
+    if (following_page==null) {
+    }
+    else{
+      following_page.style.marginTop=marginTop
+
+    }
+    if (pageNumber=="1") {
+      
+    }
+    else{
+      let current_top_margin=parseInt(page.style.marginTop.slice(0,-2))
+      let new_top_margin=(current_top_margin-parseInt(this.cut_box[0])).toString()+"px"
+      page.style.marginTop=`${new_top_margin}`
+    }
+    console.log("cutbox: "+this.cut_box[0]);
+    console.log("marginTop: "+page.style.marginTop);
     
-  })
-  
-}); */
+    this.cut_box=["",""]  */
 
+  }
+}
+create_line(){
+  let pageNumber=parseInt(this.targetted_sheet.page)
+  let specific_page=document.getElementsByClassName('pdfViewer removePageBorders')[0]! as HTMLElement
+specific_page.style.margin="0"
+  let height=parseInt(this.targetted_sheet.height)
+let position = this.chosen_layer + (pageNumber-1) * height
+let line = document.createElement("div")
+let container = document.getElementById("container")
+line.style.position="absolute"
+line.style.width="80%"
+line.style.height="1px"
+line.style.userSelect="none"
+line.style.backgroundColor="red"
+//container?.appendChild(line)
 
+specific_page.appendChild(line)
+console.log("created");
+console.log("position: "+position);
+
+line.style.top=`${position}px`
 
 
 }
@@ -194,3 +265,5 @@ clearintervals(){
 
 }
 }
+
+
