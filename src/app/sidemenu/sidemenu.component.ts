@@ -16,6 +16,7 @@ export class SidemenuComponent implements OnInit, AfterViewInit {
   @ViewChild('sidemenu', {static:false}) private side!: SidemenuComponent
 
   @Output() render_sheet = new EventEmitter<any>();
+  @Output() sendkey = new EventEmitter<any>();
 
 sheets: Array<Sheets>=[]
   active_sheet!: Sheets;
@@ -55,6 +56,9 @@ get_database_sheets(){
 
  
 }
+send_key(key:any){
+this.sendkey.emit(key)
+}
 scrolling(){
   let element= document.getElementsByClassName("ng2-pdf-viewer-container")[0]
   element.scrollBy({
@@ -76,6 +80,7 @@ send_pdf(event:any) {
   this.render_sheet.emit(event)
   
 }
+
 
 render_sidemenu(target:any){
 
@@ -106,6 +111,7 @@ render_sidemenu(target:any){
         this.active_sheet=target[searched_sheet]
         this.active_url=this.active_sheet["imageUrl"]
         this.send_pdf(this.active_url)
+        this.send_key(this.active_sheet)
         //output
         
       }  )

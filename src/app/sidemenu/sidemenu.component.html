@@ -1,4 +1,4 @@
-<app-add-pdf #addpdf (render)="send_pdf($event)"></app-add-pdf>
+<app-add-pdf #addpdf (render)="send_pdf($event)" (sendkey)="send_key($event)"></app-add-pdf>
 <div  #menu *ngIf="show_menu" class="w-1/3 h-screen" class="no-scrollbar">
         <input type="text" #filter class="z-50 fixed h-7 top-7 left-1 w-1/4 rounded-md" [(ngModel)]="filter_exp" (ngModelChange)="filter_sheets()"  placeholder="search">
         <div #container class="overflow-auto w-1/4  hover:overflow-y  hide_scroll h-screen fixed top-24 ">

@@ -9,6 +9,7 @@ import { AddPdfComponent } from './add-pdf/add-pdf.component';
 import { FormsModule } from '@angular/forms';
 import { DBConfig, NgxIndexedDBModule } from 'ngx-indexed-db';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { IonicModule } from '@ionic/angular';
 
 const dbConfig: DBConfig  = {
   name: 'sheets',
@@ -19,7 +20,8 @@ const dbConfig: DBConfig  = {
     storeSchema: [
       
       { name: 'name', keypath: 'name', options: { unique: false } },
-      { name: 'imageUrl', keypath: 'imageUrl', options: { unique: false } }
+      { name: 'imageUrl', keypath: 'imageUrl', options: { unique: false } },
+      { name: 'cutvars', keypath: 'cutvars', options: { unique: false } }
     ]
   },
   
@@ -38,6 +40,7 @@ const dbConfig: DBConfig  = {
     FormsModule,
     PdfViewerModule,
     NgxIndexedDBModule.forRoot(dbConfig),
+    IonicModule.forRoot(),
 
   ],
   providers: [],

@@ -11,6 +11,7 @@ export class AddPdfComponent implements OnInit {
   @ViewChild('sheetinput', { static: false }) sheetinput!: ElementRef;
   @ViewChild('upload', { static: false }) uploaddiv!: ElementRef;
   @Output() render = new EventEmitter<any>();
+  @Output() sendkey = new EventEmitter<any>();
 
   sheetname: string |undefined
   files: FileList | null | undefined;
@@ -30,6 +31,7 @@ export class AddPdfComponent implements OnInit {
     }).subscribe((key) => {
       console.log('key: ', key);
       this.render_new(selectedFile![0])
+      this.send_key(key)
     });
     //location.reload()
   }
@@ -41,6 +43,9 @@ export class AddPdfComponent implements OnInit {
   }
   render_new(selected:any){
     this.render.emit(selected);
+  }
+  send_key(key:any){
+    this.sendkey.emit(key)
   }
 inputing(){
 this.input.nativeElement.click()
