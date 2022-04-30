@@ -115,6 +115,47 @@ this.show_decibel=!this.show_decibel
     }
 
 }
+pageRendered(e: CustomEvent) {
+  this.regular_cut()
+}
+regular_cut(){
+  let key=this.srckey
+  let name=key.name
+  this.dbService.getAll('sheets').subscribe((sheets:any)=>{
+    let sheet = sheets.findIndex((element:any)=>element.name==name)
+    if (sheets[sheet]["cutbox"]!=undefined) {
+      let cutbox= sheets[sheet]["cutbox"] 
+      console.log(cutbox);
+  let page_one=document.querySelector(`[data-page-number=\"1\"`)! as HTMLElement
+  let height =parseInt((page_one.style.height.slice(0,-2)))
+  let i=0
+  let j=1
+  let pagenr=1
+  for (let pages = 0; pages < (cutbox.length/2); pages++) {
+    let top= cutbox[i]
+    let bottom= height - cutbox[j]
+  let page=document.querySelector(`[data-page-number=\"${pagenr}\"`)! as HTMLElement
+  console.log(page);
+  
+  page.style.clipPath= `inset(${top}px 0px ${bottom}px 0px)`
+  if (pagenr>1) {
+    let new_top_margin=-((height - cutbox[j-2]) + cutbox[i])
+    page.style.marginTop=`${new_top_margin}px`
+  }
+  page.style.marginBottom="0px"
+  i=i+2
+  j=j+2
+  pagenr=pagenr+1
+    }
+    
+}
+else{
+  console.log("no cutbox existent");
+  
+}
+      })
+  
+}
 apply_cut(){
   if (this.cutter.nativeElement.innerHTML=="Cut") {
     
@@ -122,7 +163,7 @@ apply_cut(){
   let i=0
   let j=1
   let pagenr=1
-  for (let pages = 0; pages < (this.cutbox.length/2)+1; pages++) {
+  for (let pages = 0; pages < (this.cutbox.length/2); pages++) {
     let top= this.cutbox[i]
     let bottom=this.page_height - this.cutbox[j]
   let page=document.querySelector(`[data-page-number=\"${pagenr}\"`)! as HTMLElement
@@ -143,15 +184,24 @@ apply_cut(){
 this.cutter.nativeElement.innerHTML="Save"
 }
 else{
-  this.dbService.update('sheets', {
-   
-  }).subscribe((key) => {
-    console.log('key: ', key);
-   
-  });
+  let key=this.srckey
+  let name=key.name
+  let imageUrl=key.imageUrl
+  this.dbService.getAll('sheets').subscribe((sheets:any)=>{
+let sheet = sheets.findIndex((element:any)=>element.name==name)
+this.dbService.update('sheets', {
+  id: sheets[sheet]["id"],
+  imageUrl: imageUrl,
+  name: name,
+  cutbox: this.cutbox
+ }).subscribe((key) => {
 console.log("Cutbox Saved");
+console.log(key);
 
+  
+ });
 
+  })
 }
 }
 scroll(){

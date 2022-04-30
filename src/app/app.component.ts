@@ -34,6 +34,7 @@ export class AppComponent {
   }
   send_key(key:any){
     this.slider.srckey=key
+
   }
  
 

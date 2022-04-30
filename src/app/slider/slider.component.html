@@ -2,6 +2,7 @@
 
     <pdf-viewer   (click)="getclass()" 
     [src]="pdfSrc"
+    (page-rendered)="pageRendered($event)"
     [render-text]="false"
     [original-size]="false"
     class="h-screen w-full cursor-crosshair z-9 " id="whole-pdf" >
