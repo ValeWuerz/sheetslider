@@ -277,16 +277,36 @@ else{
   
 }
 scrollToBottom()  {
+  let starttime:any;
+  let endtime:any;
   let element= document.getElementsByClassName("ng2-pdf-viewer-container")[0]
+
 
   console.log("Speed: "+(100-this.speed));
   
   this.scrollinterval= window.setInterval(() => { 
+  if (element.scrollTop>1007 &&element.scrollTop<1008) {
+    starttime=new Date()
+    console.log("Start "+ starttime);
+    
+  }
+  else if(element.scrollTop>2006 && element.scrollTop<2007){
+    endtime= new Date()
+    let diff= endtime-starttime
+    console.log("DIFFERENCE: "+diff);
+    console.log("End "+ endtime);
+
+    
+  }
+
+
+
+    
     element.scrollBy({
       top: 1,
       left:0,
       behavior: 'auto'
-    }); }, 100-this.speed);
+    }); }, /* 100-this.speed */ 15);
   
 }
 clearintervals(){
