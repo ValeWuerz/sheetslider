@@ -13,6 +13,8 @@ rounded-md cursor-pointer"  >{{decibel_nr}}</div>
 (click)="init_cutting()">Editor</div>
 <div #cutter class="fixed z-10 select-none right-14 w-12 bg-blue-400 top-20 text-center rounded-md cursor-pointer" 
 (click)="apply_cut()">Cut</div>
+<div class="fixed top-0 right-40 rounded-md bg-blue-500" (click)="init_smiley()">Smile</div>
+<div class="fixed top-0 right-60 rounded-md bg-blue-500" (click)="stopvideo()">Videostop</div>
 
 <div id="speed" class="fixed right-3 z-40 top-10 select-none " *ngIf="show_decibel">
     

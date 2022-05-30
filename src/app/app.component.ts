@@ -25,6 +25,8 @@ export class AppComponent {
     reader.readAsArrayBuffer(event)
      reader.onload = () =>{
   var typedarray = new Uint8Array(<ArrayBuffer>reader.result);
+  console.log(typedarray);
+  
   this.slider.pdfSrc=typedarray
   this.showing()
   

@@ -1,5 +1,7 @@
 <div *ngIf="showinput" #upload class="fixed top-0" >
 
     <div (click)="inputing()"  class=" bg-orange-200 select-none fixed cursor-pointer rounded-md ml-1 w-1/4 text-center text-xl mt-14 ">+</div>
-    <input #input type="file" id="input" class="hidden" >
+    <input #input type="file" multiple id="input" class="hidden" >
+    
 </div>
+<canvas id="canvas">

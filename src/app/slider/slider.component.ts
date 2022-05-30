@@ -2,6 +2,8 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
+declare var init_smiley:any;
+declare var stopvideo:any;
 @Component({
   selector: 'app-slider',
   templateUrl: './slider.component.html',
@@ -38,6 +40,12 @@ display_scroll=true
    
    }
   ngOnInit(): void {
+  }
+  init_smiley(){
+    new init_smiley()
+  }
+  stopvideo(){
+    new stopvideo()
   }
   ngAfterViewInit(): void {
   let element= document.getElementsByClassName("ng2-pdf-viewer-container")[0]
