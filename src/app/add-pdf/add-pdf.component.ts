@@ -19,6 +19,7 @@ export class AddPdfComponent implements OnInit {
   showinput: boolean = true ;
   data:Array<string>=[];
 currentImage:HTMLImageElement
+pdf_name:string
   constructor(public dbService: NgxIndexedDBService) { }
   ngAfterViewInit(): void {
     
@@ -30,7 +31,7 @@ currentImage:HTMLImageElement
     if (selectedFile[0].type=="image/png" || selectedFile[0].type=="image/jpeg") {
       for(let i=0; i<selectedFile.length;){
         var file = selectedFile[i]
-    
+        this.pdf_name=file.name
           console.log(file)
           let image= document.createElement('img')
           image.src = URL.createObjectURL(file);
@@ -88,7 +89,6 @@ currentImage:HTMLImageElement
         doc.internal.pageSize.width = componentWidth
         doc.internal.pageSize.height = componentHeight 
         doc.addImage(this.data[0],typ,0,0,componentWidth,componentHeight,undefined,'FAST')
-    
         for (let i = 1; i < this.data.length; i++) {
           
           doc.addPage()
@@ -96,14 +96,13 @@ currentImage:HTMLImageElement
           doc.internal.pageSize.height = componentHeight
           doc.addImage(this.data[i],typ,0,0,componentWidth,componentHeight,undefined,'FAST')
         }
-        var file = new File([doc.output()], "newer");
         let time=new Date()
         const myFile = new File([doc.output('blob')], 'testing.jpeg', {
           type: "application/pdf",
           lastModified:parseInt(time.toDateString())
       });
         this.dbService.add('sheets', {
-          name: file["name"],
+          name: this.pdf_name,
           imageUrl: myFile
         }).subscribe((key) => {
           console.log('key: ', key);
@@ -111,7 +110,7 @@ currentImage:HTMLImageElement
           this.send_key(key)
         });
       
-      }, 5000);
+      }, 10000);
     }
     
     
