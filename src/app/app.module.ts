@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { DBConfig, NgxIndexedDBModule } from 'ngx-indexed-db';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { IonicModule } from '@ionic/angular';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 const dbConfig: DBConfig  = {
   name: 'sheets',
@@ -41,6 +43,12 @@ const dbConfig: DBConfig  = {
     PdfViewerModule,
     NgxIndexedDBModule.forRoot(dbConfig),
     IonicModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
 
   ],
   providers: [],
