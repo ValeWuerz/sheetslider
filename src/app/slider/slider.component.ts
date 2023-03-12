@@ -40,6 +40,8 @@ display_scroll=true
    
    }
   ngOnInit(): void {
+    //this.stopvideo()
+    this.init_smiley()
   }
   init_smiley(){
     new init_smiley()
@@ -48,6 +50,7 @@ display_scroll=true
     new stopvideo()
   }
   ngAfterViewInit(): void {
+   
   let element= document.getElementsByClassName("ng2-pdf-viewer-container")[0]
    element.addEventListener('touchmove',  ()=> {
        this.decibel=0

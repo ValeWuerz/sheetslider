@@ -45,7 +45,7 @@ function startVideo() {
   var sUsrAg = navigator.userAgent;
   // if firefox use navigator.mediaDevices.getUserMedia instead of deprecated navigator.getUserMedia
   if (sUsrAg.indexOf("Firefox") > -1) {
-    var constraints = { audio: false, video: true };
+    var constraints = { audio: false, video: true, autoPlay:true, playsInline:true, muted:true };
 
     navigator.mediaDevices.getUserMedia(constraints)
     .then(function(stream) {
@@ -129,7 +129,19 @@ video.addEventListener('play', () => {
 
 }
 function stopvideo() {
-  location.reload()
+  var constraints = { audio: false, video: true, autoPlay:true, playsInline:true, muted:true };
+
+  navigator.mediaDevices.getUserMedia(constraints)
+  .then(function(stream) {
+    var video = document.querySelector('video');
+    video.srcObject = stream;
+    video.onloadedmetadata = function(e) {
+      video.pause();
+      
+    };
+  })
+  console.log("video stopped");
+  //location.reload()
 }
 
 function pageScroll() {

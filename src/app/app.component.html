@@ -1,4 +1,4 @@
-<button class="fixed z-10 bg-blue-300 rounded-md top-0 left-0 " (click)="showing()">MENUS</button>
+<button class="fixed z-10 bg-blue-300 rounded-md top-0 left-0 p-2 hover:bg-green-400 border-1 select-none " (click)="showing()">MENUS</button>
 
 <app-slider #slider></app-slider>
 <app-sidemenu #sidemenu *ngIf="show_menu" (render_sheet)="render_sheet($event)" (sendkey)="send_key($event)"  ></app-sidemenu>

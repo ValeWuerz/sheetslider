@@ -85,22 +85,28 @@ send_pdf(event:any) {
 render_sidemenu(target:any){
 
   for (let index = 0; index < target.length; index++) {
-    let reader = new FileReader();
+    //let reader = new FileReader();
  
-    reader.readAsArrayBuffer(target[index]["imageUrl"])
-     reader.onload = () =>{
-  var typedarray = new Uint8Array(<ArrayBuffer>reader.result);
+    //reader.readAsArrayBuffer(target[index]["imageUrl"])
+     //reader.onload = () =>{
+  //var typedarray = new Uint8Array(<ArrayBuffer>reader.result);
  
-  pdfjs.getDocument(typedarray).promise.then((pdf:any) => {
-    pdf.getPage(1).then( (page:any) =>  {
-      var viewport = page.getViewport({scale:1});
-      let can= document.createElement('canvas')
+  //pdfjs.getDocument(typedarray).promise.then((pdf:any) => {
+    //pdf.getPage(1).then( (page:any) =>  {
+      //var viewport = page.getViewport({scale:1});
+      //let can= document.createElement('canvas')
       let label= document.createElement('div')
       label.innerText=target[index]["name"]
-      label.setAttribute("class", "bg-slate-500 ")
-      can.setAttribute("id", target[index]["name"].toString());
-      can.setAttribute("class", "hover:border-yellow-50 hover:border-4" );
-      can.addEventListener('click',  (event:any) => {
+      
+      label.setAttribute("id", target[index]["name"].toString())
+      //can.setAttribute("id", target[index]["name"].toString());
+      //can.setAttribute("class", "hover:border-yellow-50 hover:border-4" );
+      label.setAttribute("class", "hover:border-green-100 border-black-100 border-4 hover:border-4 hover:uppercase hover:cursor-pointer text-center bg-slate-500 p-2 h-12" );
+      //label.setAttribute("class","text-center" )
+      //label.setAttribute("class", "bg-slate-500 ")
+      //label.setAttribute("class", "capitalize hover:uppercase" );
+      //label.setAttribute("class", "cursor-pointer" );
+      label.addEventListener('click',  (event:any) => {
         
         let sheet_index = event.target['id']   //name
         let searched_sheet = target.findIndex((sheet:any)=>{
@@ -117,28 +123,30 @@ render_sidemenu(target:any){
       }  )
       //Add the Label to the Sidemenu element (sheet)
       this.sheet_list.nativeElement.appendChild(label)
-      this.sheet_list.nativeElement.appendChild(can)
-      can.height = viewport.height;
-      can.width = viewport.width;
-      can.style.width="100%"
-       page.render({
+      //this.sheet_list.nativeElement.appendChild(can)
+      //can.height = viewport.height;
+      //can.width = viewport.width;
+      //can.style.width="100%"
+     /*   page.render({
         canvasContext: can.getContext('2d'),
                   viewport: viewport
-      });
+      }); */
  
-    });
+    //}
+    //);
  
   
  
   
-   });
+   //}
+  // );
     }
  
  
  
   }
 
-   }
+   //}
 
 
 
