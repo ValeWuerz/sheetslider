@@ -1,0 +1,30 @@
+[debug] [2023-03-12T18:51:43.454Z] ----------------------------------------------------------------------
+[debug] [2023-03-12T18:51:43.458Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\valen\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2023-03-12T18:51:43.459Z] CLI Version:   11.8.0
+[debug] [2023-03-12T18:51:43.459Z] Platform:      win32
+[debug] [2023-03-12T18:51:43.460Z] Node Version:  v18.8.0
+[debug] [2023-03-12T18:51:43.463Z] Time:          Sun Mar 12 2023 19:51:43 GMT+0100 (Mitteleuropäische Normalzeit)
+[debug] [2023-03-12T18:51:43.463Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-03-12T18:51:43.608Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-03-12T18:51:43.608Z] > authorizing via signed-in user (valentinwuerz@gmail.com)
+[debug] [2023-03-12T18:51:43.608Z] [iam] checking project sheetslider-testing for permissions ["firebase.projects.get"]
+[debug] [2023-03-12T18:51:43.610Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/sheetslider-testing:testIamPermissions [none]
+[debug] [2023-03-12T18:51:43.610Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/sheetslider-testing:testIamPermissions x-goog-quota-user=projects/sheetslider-testing
+[debug] [2023-03-12T18:51:43.611Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sheetslider-testing:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2023-03-12T18:51:43.910Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/sheetslider-testing:testIamPermissions 200
+[debug] [2023-03-12T18:51:43.910Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/sheetslider-testing:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2023-03-12T18:51:43.912Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/sheetslider-testing [none]
+[debug] [2023-03-12T18:51:44.411Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/sheetslider-testing 200
+[debug] [2023-03-12T18:51:44.412Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/sheetslider-testing {"projectId":"sheetslider-testing","projectNumber":"466509723852","displayName":"sheetslider-testing","name":"projects/sheetslider-testing","resources":{"hostingSite":"sheetslider-testing"},"state":"ACTIVE","etag":"1_fa68f723-ce6b-4252-b929-bd2423dd9315"}
+[info] 
+[info] === Serving from 'C:\Users\valen\Desktop\Programmieren\Projekte\sheet-slider'...
+[info] 
+[debug] [2023-03-12T18:51:44.426Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/sheetslider-testing/sites 
+[debug] [2023-03-12T18:51:45.635Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/sheetslider-testing/sites 200
+[debug] [2023-03-12T18:51:45.635Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/sheetslider-testing/sites {"sites":[{"name":"projects/sheetslider-testing/sites/sheetslider-testing","defaultUrl":"https://sheetslider-testing.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2023-03-12T18:51:45.636Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/sheetslider-testing/webApps/-/config [none]
+[debug] [2023-03-12T18:51:46.258Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/sheetslider-testing/webApps/-/config 200
+[debug] [2023-03-12T18:51:46.259Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/sheetslider-testing/webApps/-/config {"projectId":"sheetslider-testing","storageBucket":"sheetslider-testing.appspot.com","apiKey":"AIzaSyBSvnPN-TWWUSMIdzDmSILcTnjQexU6cz8","authDomain":"sheetslider-testing.firebaseapp.com","messagingSenderId":"466509723852"}
+[info] i  hosting: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] +  hosting: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
