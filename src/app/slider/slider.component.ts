@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
 declare var init_smiley:any;
 declare var stopvideo:any;
+
 @Component({
   selector: 'app-slider',
   templateUrl: './slider.component.html',
@@ -13,7 +14,7 @@ export class SliderComponent implements OnInit,AfterViewInit {
   decibel_nr="Mic"
   srckey:any
   check: boolean =false
-  show_decibel:boolean=true
+  show_decibel:boolean=false
   scrollcause: number | undefined;
   decibel: number | undefined
   editor_opened: boolean=false
@@ -33,7 +34,7 @@ export class SliderComponent implements OnInit,AfterViewInit {
     speed: number =60;
     cutbox: any=[]
     page_height:number=0
-pdfSrc!:Uint8Array;
+pdfSrc!:any ;
 display_scroll=true
 
   constructor(public dbService: NgxIndexedDBService) {
@@ -42,6 +43,7 @@ display_scroll=true
   ngOnInit(): void {
     //this.stopvideo()
     this.init_smiley()
+    this.pdfSrc="/assets/Vivaldi_Four_Seasons_Winter.pdf"
   }
   init_smiley(){
     new init_smiley()
@@ -53,12 +55,12 @@ display_scroll=true
    
   let element= document.getElementsByClassName("ng2-pdf-viewer-container")[0]
    element.addEventListener('touchmove',  ()=> {
-       this.decibel=0
+       //this.decibel=0
        //to enable manual scrolling while mic is on
        
    })
     document.addEventListener("deviceready", this.onDeviceReady, false);
-      this.initialisieren()
+      //this.initialisieren()
 let ngcontainer=<HTMLElement>document.getElementsByClassName("ng2-pdf-viewer-container")[0]
 ngcontainer.style.overflowX="hidden"
 }
@@ -127,7 +129,7 @@ this.show_decibel=!this.show_decibel
 
 }
 pageRendered(e: CustomEvent) {
-  this.regular_cut()
+  //this.regular_cut()
 }
 regular_cut(){
   let key=this.srckey

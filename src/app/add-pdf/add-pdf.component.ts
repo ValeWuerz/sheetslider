@@ -15,6 +15,7 @@ export class AddPdfComponent implements OnInit {
   @Output() sendkey = new EventEmitter<any>();
 
   sheetname: string |undefined
+  new_sheetname: string
   files: FileList | null | undefined;
   showinput: boolean = true ;
   data:Array<string>=[];
@@ -101,8 +102,10 @@ pdf_name:string
           type: "application/pdf",
           lastModified:parseInt(time.toDateString())
       });
+        this.new_sheetname = prompt("Sheetname: ")
         this.dbService.add('sheets', {
-          name: this.pdf_name,
+          /* name: this.pdf_name.slice(0,24), */
+          name: this.new_sheetname,
           imageUrl: myFile
         }).subscribe((key) => {
           console.log('key: ', key);
@@ -120,7 +123,7 @@ pdf_name:string
     }
     else{
     this.dbService.add('sheets', {
-      name: selectedFile![0]["name"],
+      name: selectedFile![0]["name"].slice(0,24),
       imageUrl: selectedFile![0]
     }).subscribe((key) => {
       console.log('key: ', key);

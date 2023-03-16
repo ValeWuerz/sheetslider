@@ -7,15 +7,15 @@
     [original-size]="false"
     class="h-screen w-full cursor-crosshair z-9 " id="whole-pdf" >
 </pdf-viewer>
-<!-- <div #decibel *ngIf="show_decibel"  class="fixed z-10 select-none right-1 top-0 bg-gray-600 w-12 text-white text-center
-rounded-md cursor-pointer"  >{{decibel_nr}}</div> -->
+<div #decibel *ngIf="show_decibel"  class="fixed z-10 select-none right-1 top-0 bg-gray-600 w-12 text-white text-center
+rounded-md cursor-pointer"  >{{decibel_nr}}</div>
 <!-- <div #sheet class="fixed z-10 select-none right-14 w-12 bg-blue-400 top-0 text-center rounded-md cursor-pointer" 
 (click)="init_cutting()">Editor</div> -->
 <!-- <div #cutter class="fixed z-10 select-none right-14 w-12 bg-blue-400 top-20 text-center rounded-md cursor-pointer" 
 (click)="apply_cut()">Cut</div> -->
-<div class="fixed top-0 right-40 rounded-md bg-blue-500 cursor-pointer select-none hover:border-green-100 p-2" (click)="init_smiley()">Smile</div>
+<!-- <div class="fixed top-0 right-40 rounded-md bg-blue-500 cursor-pointer select-none hover:border-green-100 p-2" (click)="init_smiley()">Smile</div>
 <div class="fixed top-0 right-60 rounded-md bg-blue-500 cursor-pointer select-none hover:border-green-100  p-2" (click)="stopvideo()">Videostop</div>
-
+ -->
 <!-- <div id="speed" class="fixed right-3 z-40 top-10 select-none " *ngIf="show_decibel">
     
     <input    type="range" min="0" max="100" value="60" step="1" [(ngModel)]="speed" >
