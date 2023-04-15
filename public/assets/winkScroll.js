@@ -1,4 +1,5 @@
 
+let videostopped=false
 function init_smiley() {
   
 let DEBUG = true
@@ -70,6 +71,7 @@ function startVideo() {
 }
 
 video.addEventListener('play', () => {
+  console.log(video);
   
   console.log("video plays");
   let cooldown="disabled"
@@ -78,6 +80,7 @@ video.addEventListener('play', () => {
     // Detect faces with face-api
     const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
     // JUST AN EXTRA FEATURE - Changing Body color based on facial expressions
+   
     if(DEBUG && detections.length==1) {
       if(detections[0].expressions.neutral>0.7) {
         document.body.style.backgroundColor = "white";
@@ -129,17 +132,19 @@ video.addEventListener('play', () => {
 
 }
 function stopvideo() {
-  var constraints = { audio: false, video: true, autoPlay:true, playsInline:true, muted:true };
+  videostopped=true
+ /*  var constraints = { audio: false, video: true, autoPlay:true, playsInline:true, muted:true };
 
   navigator.mediaDevices.getUserMedia(constraints)
   .then(function(stream) {
     var video = document.querySelector('video');
+    console.log(video);
     video.srcObject = stream;
     video.onloadedmetadata = function(e) {
       video.pause();
       
     };
-  })
+  }) */
   console.log("video stopped");
   //location.reload()
 }
